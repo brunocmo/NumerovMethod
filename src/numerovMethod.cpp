@@ -1,5 +1,7 @@
 #include "numerovMethod.hpp"
 #include <iostream>
+#include <cmath>
+#include <vector>
 #include <stdio.h>
 
 NumerovMethod::NumerovMethod() {
@@ -10,26 +12,24 @@ NumerovMethod::NumerovMethod() {
 }
 
 NumerovMethod::NumerovMethod(
-        double YnAnterior, 
         double Yn, 
         double valorE, 
         double valorH
     ) {
-    this->YnAnterior = YnAnterior;
     this->Yn = Yn;
     this->valorE = valorE;
     this->valorH = valorH;
+    Yn = 0;
     YnPosterior = 0;
 }
 
 NumerovMethod::NumerovMethod(
-        double YnAnterior, 
         double Yn, 
         double valorH
     ) {
-    this->YnAnterior = YnAnterior;
     this->Yn = Yn;
     this->valorH = valorH;
+    Yn = 0;
     YnPosterior = 0;
     valorE = 0;
 }
@@ -137,9 +137,9 @@ bool NumerovMethod::gerarResultadoSemE(int valorInicial, int valorFinal){
     resultadoSimulado[0] = YnAnterior;
     resultadoSimulado[1] = Yn;
 
+    std::vector<double> valoresE;
 
     int iterador{0};
-    double valorEsalvo[3] = {0,0,0};
 
     for(double e{double(valorInicial)}; e<double(valorFinal); e+=0.000005) {
         
@@ -159,28 +159,39 @@ bool NumerovMethod::gerarResultadoSemE(int valorInicial, int valorFinal){
         }
 
         if( resultadoSimulado[100] < erroAproximado && resultadoSimulado[100] > -erroAproximado) {
-            valorEsalvo[iterador] = e;
-            printf("Simulado = %lf\n", resultadoSimulado[100]);
-            printf("Entrei, o valor E = %f \n", e);
+            valoresE.push_back(e);
+            // printf("Simulado = %lf\n", resultadoSimulado[100]);
+            // printf("Entrei, o valor E = %f \n", e);
             iterador++;
-            set_valorE(e);
         };
 
     }
 
-    if(get_valorE() == 0) return EXIT_FAILURE;
-
-    for( int j{0}; j<3 ; j++) {
-        printf("Valor possivel de E: %lf\n", valorEsalvo[j]);
+    for( double valor : valoresE) {
+        printf("Valor possivel de E: %lf\n", valor);
     }
 
-    set_YnAnterior(inicialYnAnterior);
-    set_Yn(inicialYn);
+    // set_YnAnterior(inicialYnAnterior);
+    // set_Yn(inicialYn);
 
-    gerarResultado();
+    // gerarResultado();
 
     return EXIT_SUCCESS;
 
+}
+
+bool NumerovMethod::gerarResultadoComE( double e ) {
+
+    set_valorE(e);
+    set_Yn( sqrt(2)*sin(sqrt(e)*valorH) );
+    set_YnAnterior(0);
+
+    std::cout << "Plotando para Yn em "<< get_Yn() << '\n';
+
+    gerarResultado();
+    gerarTabela();
+
+    return EXIT_SUCCESS;
 }
 
 bool NumerovMethod::gerarTabela() {

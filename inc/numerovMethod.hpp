@@ -13,12 +13,11 @@ class NumerovMethod {
     public:
         NumerovMethod();
         NumerovMethod(
-            double YnAnterior, 
             double Yn, 
             double valorE, 
             double valorH
         );
-        NumerovMethod(double YnAnterior, double Yn, double valorH);
+        NumerovMethod(double Yn, double valorH);
         ~NumerovMethod();
 
         double get_YnAnterior();
@@ -39,6 +38,8 @@ class NumerovMethod {
         bool gerarResultado();
 
         bool gerarResultadoSemE(int valorInicial, int valorFinal);
+
+        bool gerarResultadoComE( double e );
 
         bool gerarTabela();
 
