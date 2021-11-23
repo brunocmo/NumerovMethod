@@ -20,6 +20,7 @@ class NumerovMethod {
         NumerovMethod(double Yn, double valorH);
         ~NumerovMethod();
 
+        // Geters and Setters
         double get_YnAnterior();
         void set_YnAnterior(double YnAnterior);
 
@@ -35,12 +36,13 @@ class NumerovMethod {
         double get_valorH();
         void set_valorH(double valorH);
 
+        // Gera resultado com valores definidos
         bool gerarResultado();
-
+        // Mostra valores possíveis de E com seus limites definidos
         bool gerarResultadoSemE(int valorInicial, int valorFinal);
-
+        // Gera o resultado com o valor de E selecionado
         bool gerarResultadoComE( double e );
-
+        // Cria a tabelo com GNU plot
         bool gerarTabela();
 
 };
