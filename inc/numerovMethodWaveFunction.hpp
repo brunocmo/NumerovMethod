@@ -30,6 +30,13 @@ class NumerovMethodWaveFunction: public NumerovMethod {
         );
 
 
+        bool gerarResultadoFinal();
+
+        double procurarE(double E);
+
+        // Gera resultado com valores definido metado convergindo
+        bool gerarResultadoMeioConverge();
+        
 
         bool gerarResultadoMetade();
         // Gera resultado com valores definidos

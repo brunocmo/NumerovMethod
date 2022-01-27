@@ -9,38 +9,49 @@ int main() {
   // NumerovMethod * teste3 = new NumerovMethod(0.0888, 0.01);
   // NumerovMethod * teste4 = new NumerovMethod(0.133089, pow(3*M_PI, 2), 0.01);
 
-    // NumerovMethodWaveFunction * teste5 = new NumerovMethodWaveFunction(
-    //   0.001,
-    //   0.00147,
+    NumerovMethodWaveFunction * teste5 = new NumerovMethodWaveFunction(
+      0.001,
+      0.00147,
+      912.7e+6, 
+      5.47e+14,
+      0.001,
+      -0.046
+    );
+
+    teste5->gerarResultadoFinal();
+
+    // NumerovMethodWaveFunction * teste6 = new NumerovMethodWaveFunction(
+    //   7.196870093,
+    //   7.196867060,
     //   912.7e+6, 
     //   5.47e+14,
-    //   0.001,
-    //   -0.046
+    //   0.00001,
+    //   0
     // );
 
-    // teste5->gerarResultadoProvisorio();
+    // teste6->gerarResultadoMetade();
 
-    NumerovMethodWaveFunction * teste6 = new NumerovMethodWaveFunction(
-      7.196870093,
-      7.196867060,
-      912.7e+6, 
-      5.47e+14,
-      0.00001,
-      0
-    );
+    // NumerovMethodWaveFunction * teste7 = new NumerovMethodWaveFunction(
+    //   0.01,
+    //   0.01003930613,
+    //   912.7e+6, 
+    //   5.47e+14,
+    //   0.00001,
+    //   -0.03951
+    // );
 
-    teste6->gerarResultadoMetade();
+    // teste7->gerarResultadoProvisorio();
 
-    NumerovMethodWaveFunction * teste7 = new NumerovMethodWaveFunction(
-      0.01,
-      0.01003930613,
-      912.7e+6, 
-      5.47e+14,
-      0.00001,
-      -0.03951
-    );
+    // NumerovMethodWaveFunction * teste8 = new NumerovMethodWaveFunction(
+    //   0.01,
+    //   0.01003930613,
+    //   912.7e+6, 
+    //   5.47e+14,
+    //   0.00001,
+    //   -0.03951
+    // );
 
-    teste7->gerarResultadoProvisorio();
+    // teste8->gerarResultadoMeioConverge();
 
   // teste1->gerarResultado();
   // teste1->gerarTabela();
@@ -62,8 +73,7 @@ int main() {
 
 
 
-  delete teste7;
-  delete teste6;
+  delete teste5;
 
 
   return 0;

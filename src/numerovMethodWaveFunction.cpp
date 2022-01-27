@@ -33,6 +33,247 @@ NumerovMethodWaveFunction::NumerovMethodWaveFunction(
     this->beta = ((2*massa) / (planck_eV*planck_eV*velocidadeLuz*velocidadeLuz*1e+18)) * 0.18;
 } 
 
+
+bool NumerovMethodWaveFunction::gerarResultadoFinal() {
+
+    double valorYfinal{0};
+    double valorE{0};
+    double tempYnAnterior{get_YnAnterior()};
+    double tempYn{get_Yn()};
+
+    for(double E{0.1700}; E<=0.2000 ; E=E+0.0000001){
+        
+        set_YnAnterior(tempYnAnterior);
+        set_Yn(tempYn);
+
+        printf("Para %.7lf ==> ", E);
+
+        valorYfinal = procurarE(E);
+
+        // printf("%lf -- to aqui2\n", valorYfinal);
+
+        if( valorYfinal < 0.01 && valorYfinal >= -0.01 ){
+            valorE = E;
+            break;
+        }
+    }
+
+    printf(" O valor viável de E => %lf \n O valor de Yn final => %lf\n", valorE, valorYfinal);
+
+    this->beta = ((2*massa) / (planck_eV*planck_eV*velocidadeLuz*velocidadeLuz*1e+18)) * valorE;
+
+    gerarResultadoProvisorio();
+
+    return EXIT_SUCCESS;
+}
+
+double NumerovMethodWaveFunction::procurarE(double E) {
+
+    this->beta = ((2*massa) / (planck_eV*planck_eV*velocidadeLuz*velocidadeLuz*1e+18)) * E;
+
+    double resultado{0};
+
+    double An{0};
+    double Bn{0};
+    double g{0};
+    int numeroIntervalo{0};
+
+    std::vector<double> valoresAn;
+    std::vector<double> valoresBn;
+    std::vector<double> valoresX;
+
+    FILE * pFile;
+    pFile = fopen("doc/numerovValues.txt", "w");
+
+    if(!pFile) {
+        perror("Erro ao abrir o arquivo!");
+        return EXIT_FAILURE;
+    }else {
+
+
+        printf("====> Alpha - %.2lf ||| Beta - %.2lf <==== \n", alpha, beta);
+
+        for( double i{posicaoInicial}; i<(-posicaoInicial+get_valorH()); i=i+get_valorH()) {
+            
+            g = (beta - (alpha*alpha)*(i*i));
+            An = 1 + (( ( get_valorH()*get_valorH() )/12 ) * g);
+            Bn = 1 - (( ( 5*get_valorH()*get_valorH() )/12 ) * g);
+
+            // printf("Para x = %.3lf \n    An - %.4lf | Bn - %.4lf\n", i, An, Bn);
+
+            valoresAn.push_back(An);
+            valoresBn.push_back(Bn);
+            valoresX.push_back(i);
+            numeroIntervalo++;
+        }
+
+            
+
+        // std::cout << numeroIntervalo << '\n';
+
+        for( int k{2}; k<numeroIntervalo; k++) {
+            
+
+
+            // printf("Bk - %lf ; Ak+1 - %lf ; Yn - %lf \n", valoresBn.at(k), valoresAn.at(k+1), get_Yn());
+            resultado = 2*(valoresBn.at(k-1)/valoresAn.at(k)) * get_Yn();
+            // printf("valor Primario: %lf \n ------------------------\n ", resultado);
+            resultado = resultado-(valoresAn.at(k-2)/valoresAn.at(k))*get_YnAnterior();
+            set_YnPosterior(resultado);
+
+            set_YnAnterior(get_Yn());
+            set_Yn(get_YnPosterior());
+
+        }
+
+        fclose(pFile);
+
+
+    }
+
+    
+
+    return get_YnPosterior();
+
+
+}
+
+bool NumerovMethodWaveFunction::gerarResultadoMeioConverge() {
+
+
+    double resultado{0};
+
+    double An{0};
+    double Bn{0};
+    double g{0};
+    int numeroIntervalo{0};
+
+    double valorAnleft{get_YnAnterior()};
+    double valorAnmiddle{get_Yn()};
+
+
+
+    std::vector<double> valoresAn;
+    std::vector<double> valoresBn;
+    std::vector<double> valoresX;
+
+    FILE * pFile;
+    pFile = fopen("doc/numerovValuesleft.txt", "w");
+
+    if(!pFile) {
+        perror("Erro ao abrir o arquivo!");
+        return EXIT_FAILURE;
+    }else {
+
+
+        //printf("====> Alpha - %.2lf ||| Beta - %.2lf <==== \n", alpha, beta);
+
+        for( double i{-posicaoInicial}; i>=0; i=i-get_valorH()) {
+            
+            g = (beta - (alpha*alpha)*(i*i));
+            An = 1 + (( ( get_valorH()*get_valorH() )/12 ) * g);
+            Bn = 1 - (( ( 5*get_valorH()*get_valorH() )/12 ) * g);
+
+            //printf("Para x = %.3lf \n    An - %.4lf | Bn - %.4lf\n", i, An, Bn);
+
+            valoresAn.push_back(An);
+            valoresBn.push_back(Bn);
+            valoresX.push_back(i);
+            numeroIntervalo++;
+        }
+
+        
+        // std::cout << numeroIntervalo << '\n';
+
+        fprintf (pFile , "%.5f %lf\n", float(valoresX.at(0)) , get_YnAnterior());
+        fprintf (pFile , "%.5f %lf\n", float(valoresX.at(1)) , get_Yn());
+
+        for( int k{2}; k<3950; k++) {
+            
+            //printf("Bk - %lf ; Ak+1 - %lf ; Yn - %lf \n", valoresBn.at(k), valoresAn.at(k+1), get_Yn());
+            resultado = 2*(valoresBn.at(k-1)/valoresAn.at(k)) * get_Yn();
+
+            //printf("valor Primario: %lf \n ------------------------\n ", resultado);
+            resultado = resultado-(valoresAn.at(k-2)/valoresAn.at(k))*get_YnAnterior();
+            set_YnPosterior(resultado);
+
+            fprintf (pFile , "%.5f %lf\n", float(valoresX.at(k)) , get_YnPosterior());
+            set_YnAnterior(get_Yn());
+            set_Yn(get_YnPosterior());
+
+        }
+
+
+
+    }
+
+    fclose(pFile);
+
+    numeroIntervalo = 0;
+    g = 0;
+    An = 0;
+    Bn = 0;
+
+    std::vector<double> valoresAn2;
+    std::vector<double> valoresBn2;
+    std::vector<double> valoresX2;
+
+
+    FILE * p2File;
+    p2File = fopen("doc/numerovValuesright.txt", "w");
+
+    if(!p2File) {
+        perror("Erro ao abrir o arquivo!");
+        return EXIT_FAILURE;
+    }else {
+    
+        for( double j{posicaoInicial}; j<=0; j=j+get_valorH()) {
+            
+            g = (beta - (alpha*alpha)*(j*j));
+            An = 1 + (( ( get_valorH()*get_valorH() )/12 ) * g);
+            Bn = 1 - (( ( 5*get_valorH()*get_valorH() )/12 ) * g);
+
+            // printf("Para x = %.3lf \n    An - %.4lf | Bn - %.4lf\n", j, An, Bn);
+
+            valoresAn2.push_back(An);
+            valoresBn2.push_back(Bn);
+            valoresX2.push_back(j);
+            numeroIntervalo++;
+        }
+
+        
+        std::cout << numeroIntervalo << '\n';
+
+        set_YnAnterior(valorAnleft);
+        set_Yn(valorAnmiddle);
+
+        fprintf (p2File , "%.5f %lf\n", float(valoresX2.at(0)) , get_YnAnterior());
+        fprintf (p2File , "%.5f %lf\n", float(valoresX2.at(1)) , get_Yn());
+
+        for( int l{2}; l<3950; l++) {
+            
+            // printf("Bk - %lf ; Ak+1 - %lf ; Yn - %lf \n", valoresBn2.at(l), valoresAn2.at(l+1), get_Yn());
+            resultado = 2*(valoresBn2.at(l-1)/valoresAn2.at(l)) * get_Yn();
+
+            // printf("valor Primario: %lf \n ------------------------\n ", resultado);
+            resultado = resultado-(valoresAn2.at(l-2)/valoresAn2.at(l))*get_YnAnterior();
+            set_YnPosterior(resultado);
+
+            fprintf (p2File , "%.5f %lf\n", float(valoresX2.at(l)) , get_YnPosterior());
+            set_YnAnterior(get_Yn());
+            set_Yn(get_YnPosterior());
+
+        }
+    }
+
+    fclose(p2File);
+    return EXIT_SUCCESS;
+
+
+
+
+}
+
 bool NumerovMethodWaveFunction::gerarResultadoMetade() {
 
     double resultado{0};
