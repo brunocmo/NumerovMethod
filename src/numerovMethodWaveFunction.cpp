@@ -41,7 +41,7 @@ bool NumerovMethodWaveFunction::gerarResultadoFinal() {
     double tempYnAnterior{get_YnAnterior()};
     double tempYn{get_Yn()};
 
-    for(double E{0.1700}; E<=0.2000 ; E=E+0.0000001){
+    for(double E{1.61}; E<=1.63 ; E=E+0.0000001){
         
         set_YnAnterior(tempYnAnterior);
         set_Yn(tempYn);
@@ -52,15 +52,18 @@ bool NumerovMethodWaveFunction::gerarResultadoFinal() {
 
         // printf("%lf -- to aqui2\n", valorYfinal);
 
-        if( valorYfinal < 0.01 && valorYfinal >= -0.01 ){
+        if( valorYfinal < 0.1 && valorYfinal >= -0.1 ){
             valorE = E;
             break;
         }
     }
 
-    printf(" O valor viável de E => %lf \n O valor de Yn final => %lf\n", valorE, valorYfinal);
+    printf(" O valor viável de E => %.8lf \n O valor de Yn final => %lf\n", valorE, valorYfinal);
 
     this->beta = ((2*massa) / (planck_eV*planck_eV*velocidadeLuz*velocidadeLuz*1e+18)) * valorE;
+
+    set_YnAnterior(tempYnAnterior);
+    set_Yn(tempYn);
 
     gerarResultadoProvisorio();
 

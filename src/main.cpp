@@ -10,12 +10,12 @@ int main() {
   // NumerovMethod * teste4 = new NumerovMethod(0.133089, pow(3*M_PI, 2), 0.01);
 
     NumerovMethodWaveFunction * teste5 = new NumerovMethodWaveFunction(
-      0.001,
-      0.00147,
+      0.0002,
+      0.0003,
       912.7e+6, 
       5.47e+14,
       0.001,
-      -0.046
+      -0.05
     );
 
     teste5->gerarResultadoFinal();
