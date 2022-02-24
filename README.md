@@ -1,5 +1,7 @@
 # Visual Studio Code C++ Template
 
+Um teste no readme
+
 Template for building and debugging C++ files at Visual Studio Code
 
 ***

@@ -30,6 +30,8 @@ class NumerovMethodWaveFunction: public NumerovMethod {
         );
 
 
+        bool encontrarValoresE();
+
         bool gerarResultadoFinal();
 
         double procurarE(double E);

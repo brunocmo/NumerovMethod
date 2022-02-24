@@ -9,7 +9,7 @@ int main() {
   // NumerovMethod * teste3 = new NumerovMethod(0.0888, 0.01);
   // NumerovMethod * teste4 = new NumerovMethod(0.133089, pow(3*M_PI, 2), 0.01);
 
-    NumerovMethodWaveFunction * teste5 = new NumerovMethodWaveFunction(
+    NumerovMethodWaveFunction * testeE = new NumerovMethodWaveFunction(
       0.0002,
       0.0003,
       912.7e+6, 
@@ -18,7 +18,18 @@ int main() {
       -0.05
     );
 
-    teste5->gerarResultadoFinal();
+    testeE->encontrarValoresE();
+
+    // NumerovMethodWaveFunction * testeExato = new NumerovMethodWaveFunction(
+    //   0.0002,
+    //   0.0003,
+    //   912.7e+6, 
+    //   5.47e+14,
+    //   0.001,
+    //   -0.05
+    // );
+
+    // testeExato->gerarResultadoFinal();
 
     // NumerovMethodWaveFunction * teste6 = new NumerovMethodWaveFunction(
     //   7.196870093,
@@ -73,7 +84,7 @@ int main() {
 
 
 
-  delete teste5;
+  delete testeE;
 
 
   return 0;

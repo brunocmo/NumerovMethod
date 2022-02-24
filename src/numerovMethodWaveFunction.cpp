@@ -33,6 +33,51 @@ NumerovMethodWaveFunction::NumerovMethodWaveFunction(
     this->beta = ((2*massa) / (planck_eV*planck_eV*velocidadeLuz*velocidadeLuz*1e+18)) * 0.18;
 } 
 
+bool NumerovMethodWaveFunction::encontrarValoresE() {
+
+    double valorYfinal{0};
+    double valorE{0};
+    int iteradorE{0};
+    double tempYnAnterior{get_YnAnterior()};
+    double tempYn{get_Yn()};
+    std::vector<double> valoresEnergia;
+
+    for(double E{0.53}; E<=0.55 ; E=E+0.0000001){
+        
+        set_YnAnterior(tempYnAnterior);
+        set_Yn(tempYn);
+
+        printf("Para %.7lf ==> ", E);
+
+        valorYfinal = procurarE(E);
+
+        // printf("%lf -- to aqui2\n", valorYfinal);
+
+        if( valorYfinal < 0.1 && valorYfinal >= -0.1 ){
+            valoresEnergia.push_back(E);
+        }
+    }
+
+    iteradorE = valoresEnergia.size();
+
+    for( double e : valoresEnergia) {
+        valorE += e;
+        printf("Valor possível de E: %.8lf\n", e);
+    }
+
+    valorE = valorE/iteradorE;
+
+    printf(" O valor viável de E => %.8lf \n O valor de Yn final => %lf\n", valorE, valorYfinal);
+
+    // this->beta = ((2*massa) / (planck_eV*planck_eV*velocidadeLuz*velocidadeLuz*1e+18)) * valorE;
+
+    // set_YnAnterior(tempYnAnterior);
+    // set_Yn(tempYn);
+
+    // gerarResultadoProvisorio();
+
+    return EXIT_SUCCESS;
+}
 
 bool NumerovMethodWaveFunction::gerarResultadoFinal() {
 
