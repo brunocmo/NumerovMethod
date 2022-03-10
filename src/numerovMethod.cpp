@@ -1,8 +1,4 @@
 #include "numerovMethod.hpp"
-#include <iostream>
-#include <cmath>
-#include <vector>
-#include <stdio.h>
 
 NumerovMethod::NumerovMethod() {
     YnAnterior = 0;

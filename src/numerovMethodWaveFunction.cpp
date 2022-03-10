@@ -1,8 +1,4 @@
 #include "numerovMethodWaveFunction.hpp"
-#include <iostream>
-#include <cmath>
-#include <vector>
-#include <stdio.h>
 
 NumerovMethodWaveFunction::NumerovMethodWaveFunction() {
     set_YnAnterior(0);
@@ -69,12 +65,12 @@ bool NumerovMethodWaveFunction::encontrarValoresE() {
 
     printf(" O valor viável de E => %.8lf \n O valor de Yn final => %lf\n", valorE, valorYfinal);
 
-    // this->beta = ((2*massa) / (planck_eV*planck_eV*velocidadeLuz*velocidadeLuz*1e+18)) * valorE;
+    this->beta = ((2*massa) / (planck_eV*planck_eV*velocidadeLuz*velocidadeLuz*1e+18)) * valorE;
 
-    // set_YnAnterior(tempYnAnterior);
-    // set_Yn(tempYn);
+    set_YnAnterior(tempYnAnterior);
+    set_Yn(tempYn);
 
-    // gerarResultadoProvisorio();
+    gerarResultadoProvisorio();
 
     return EXIT_SUCCESS;
 }
@@ -662,4 +658,28 @@ bool NumerovMethodWaveFunction::gerarTabela() {
 
         return EXIT_SUCCESS;
     }
+}
+
+void NumerovMethodWaveFunction::set_alpha( double alpha ) {
+    this->alpha = alpha;
+}
+
+double NumerovMethodWaveFunction::get_alpha(){
+    return this->alpha;
+}
+
+void NumerovMethodWaveFunction::set_beta( double beta ) {
+    this->beta = beta;
+}
+
+double NumerovMethodWaveFunction::get_beta(){
+    return this->beta;
+}
+
+void NumerovMethodWaveFunction::set_posicaoInicial( double posicaoInicial ) {
+    this->posicaoInicial = posicaoInicial;
+}
+
+double NumerovMethodWaveFunction::get_posicaoInicial(){
+    return this->posicaoInicial;
 }

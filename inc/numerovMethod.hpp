@@ -1,6 +1,11 @@
 #ifndef NUMEROVMETHOD_HPP
 #define NUMEROVMETHOD_HPP
 
+#include <iostream>
+#include <cmath>
+#include <vector>
+#include <stdio.h>
+
 class NumerovMethod {
 
     private: 

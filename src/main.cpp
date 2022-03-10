@@ -1,5 +1,6 @@
 #include "numerovMethod.hpp"
 #include "numerovMethodWaveFunction.hpp"
+#include "numerovMethodRing.hpp"
 #include <cmath>
 
 int main() {
@@ -9,16 +10,31 @@ int main() {
   // NumerovMethod * teste3 = new NumerovMethod(0.0888, 0.01);
   // NumerovMethod * teste4 = new NumerovMethod(0.133089, pow(3*M_PI, 2), 0.01);
 
-    NumerovMethodWaveFunction * testeE = new NumerovMethodWaveFunction(
-      0.0002,
-      0.0003,
-      912.7e+6, 
-      5.47e+14,
-      0.001,
-      -0.05
+
+    NumerovMethodRing * testeAnel01 = new NumerovMethodRing(
+      0.00126, 
+      0.00189, 
+      378.0586917, 
+      26.25407581, 
+      0.1, 
+      -3.1
     );
 
-    testeE->encontrarValoresE();
+    testeAnel01->encontrarValoresE();
+
+    delete testeAnel01;
+
+    // Versão final wavefunction
+    // NumerovMethodWaveFunction * testeE = new NumerovMethodWaveFunction(
+    //   0.0002,
+    //   0.0003,
+    //   912.7e+6, 
+    //   5.47e+14,
+    //   0.001,
+    //   -0.05
+    // );
+
+    // testeE->encontrarValoresE();
 
     // NumerovMethodWaveFunction * testeExato = new NumerovMethodWaveFunction(
     //   0.0002,
@@ -84,7 +100,7 @@ int main() {
 
 
 
-  delete testeE;
+  //delete testeE;
 
 
   return 0;

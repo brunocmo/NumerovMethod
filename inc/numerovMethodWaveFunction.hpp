@@ -1,6 +1,10 @@
 #ifndef NUMEROVMETHODWAVEFUNCTION_HPP
 #define NUMEROVMETHODWAVEFUNCTION_HPP
 #include "numerovMethod.hpp"
+#include <iostream>
+#include <cmath>
+#include <vector>
+#include <stdio.h>
 
     // planck_eV -- (em eV * segundo) 
     const double planck_eV = 6.58211915e-16;
@@ -52,6 +56,15 @@ class NumerovMethodWaveFunction: public NumerovMethod {
         bool gerarResultadoComE( double e );
         // Cria a tabelo com GNU plot
         bool gerarTabela();
+
+        void set_alpha( double alpha );
+        double get_alpha();
+
+        void set_beta( double beta );
+        double get_beta();
+
+        void set_posicaoInicial( double posicaoInicial );
+        double get_posicaoInicial();
 
 };
 
