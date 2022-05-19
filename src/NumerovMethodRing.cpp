@@ -46,7 +46,7 @@ bool NumerovMethodRing::gerarResultadoProvisorio() {
     std::vector<double> valoresX;
 
     FILE * pFile;
-    pFile = fopen("doc/numerovValues.txt", "w");
+    pFile = fopen("doc/numerovValues5.txt", "w");
 
     if(!pFile) {
         perror("Erro ao abrir o arquivo!");
@@ -54,7 +54,7 @@ bool NumerovMethodRing::gerarResultadoProvisorio() {
     }else {
 
 
-        printf("====> Alpha: %.2lf ||| Beta: %.6lf <==== \n", get_alpha(), get_beta());
+        // printf("====> Alpha: %.2lf ||| Beta: %.6lf <==== \n", get_alpha(), get_beta());
 
         for( double i{get_posicaoInicial()}; i<(-(get_posicaoInicial())+get_valorH()); i=i+get_valorH()) {
             
@@ -113,18 +113,18 @@ bool NumerovMethodRing::encontrarValoresE() {
     double tempYn{get_Yn()};
     std::vector<double> valoresEnergia;
 
-    for(double E{-14.35}; E<=(-14.33) ; E=E+0.0000001){
+    for(double E{-13.95}; E<=(-13.93) ; E=E+0.00000001){
         
         set_YnAnterior(tempYnAnterior);
         set_Yn(tempYn);
 
-        printf("Para %.7lf ==> ", E);
+        // printf("Para %.7lf ==> ", E);
 
         valorYfinal = procurarE(E);
 
         // printf("%lf -- to aqui2\n", valorYfinal);
 
-        if( valorYfinal < 0.001 && valorYfinal >= -0.001 ){
+        if( valorYfinal < 0.0012601 && valorYfinal >= 0.0012600 ){
             valoresEnergia.push_back(E);
         }
     }
@@ -133,14 +133,14 @@ bool NumerovMethodRing::encontrarValoresE() {
 
     for( double e : valoresEnergia) {
         valorE += e;
-        printf("Valor possível de E: %.8lf\n", e);
+        // printf("Valor possível de E: %.10lf\n", e);
     }
 
 
 
     valorE = valorE/iteradorE;
 
-    printf(" O valor viável de E => %.8lf \n O valor de Yn final => %lf\n", valorE, valorYfinal);
+    printf(" O valor viável de E => %.10lf \n", valorE);
     printf("Foram encontrandos %lu valores de E\n", valoresEnergia.size());
     set_beta(betaReal*valorE);
 
@@ -178,7 +178,7 @@ double NumerovMethodRing::procurarE(double E) {
     }else {
 
 
-        printf("====> Alpha - %.2lf ||| Beta - %.2lf <==== \n",  get_alpha(), get_beta());
+        // printf("====> Alpha - %.2lf ||| Beta - %.2lf <==== \n",  get_alpha(), get_beta());
 
         for( double i{get_posicaoInicial()}; i<(-(get_posicaoInicial())+get_valorH()); i=i+get_valorH()) {
             

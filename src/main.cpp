@@ -11,11 +11,15 @@ int main() {
   // NumerovMethod * teste4 = new NumerovMethod(0.133089, pow(3*M_PI, 2), 0.01);
 
 
+   //TODO Fazer menu iterativo para realizar multiplas pesquisas.
+
+   // printf(" valor %.14e ", planck_eV*velocidadeLuz );
+
     NumerovMethodRing * testeAnel01 = new NumerovMethodRing(
       0.00126, 
       0.00189, 
-      378.0586917, 
-      26.25407581, 
+      377.955306845329, 
+      26.2468963087034, 
       0.1, 
       -3.1
     );
