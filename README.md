@@ -1,10 +1,6 @@
-# Visual Studio Code C++ Template
+# Numerov Method - Applied to Schrodinger Equation
 
-Um teste no readme
-
-Template for building and debugging C++ files at Visual Studio Code
-
-***
+Test with Quantum well, Wave function and a Ring cross-section.
 
 ## Requirements
 
